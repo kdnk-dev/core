@@ -1,0 +1,1 @@
+export { kdnkReport } from "@/reports";

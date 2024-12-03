@@ -1,0 +1,6 @@
+/.idea/
+/node_modules/
+/f8n-scrapbook/
+/**/dist/
+/**/node_modules/
+/**/tsconfig.tsbuildinfo
