@@ -20,6 +20,7 @@ export const KdInputField =
     const { value, ...fieldPropsWithoutValue } = field;
     return (
       <Input
+        key={`${type},${placeholder}`}
         type={type}
         placeholder={placeholder}
         disabled={context.formMode != "edit"}
@@ -37,6 +38,7 @@ export const KdSelectField =
   ({ field, context }: FieldProps) => {
     return (
       <Select
+        key={`${JSON.stringify(options)},${placeholder}`}
         defaultValue={field.value}
         onValueChange={field.onChange}
         disabled={context.formMode != "edit"}
@@ -60,6 +62,7 @@ export const KdRadioGroup =
   ({ field, context }: FieldProps) => {
     return (
       <RadioGroup
+        key={`${JSON.stringify(options)}`}
         onValueChange={field.onChange}
         defaultValue={field.value}
         className="ktw-flex ktw-flex-col ktw-space-y-1 k ktw-pl-4"
@@ -90,6 +93,7 @@ export const KdBooleanRadioGroup =
   ({ field, context }: FieldProps) => {
     return (
       <RadioGroup
+        key={`${yesOptionLabel},${noOptionLabel}`}
         defaultValue={
           field.value === true
             ? "true"
@@ -126,7 +130,10 @@ export const KdCheckBox =
   (label: string): FunctionComponent<FieldProps> =>
   ({ field, context }: FieldProps) => {
     return (
-      <div className="ktw-flex ktw-flex-row ktw-items-start ktw-space-x-3 ktw-space-y-0 ktw-pl-4">
+      <div
+        key={label}
+        className="ktw-flex ktw-flex-row ktw-items-start ktw-space-x-3 ktw-space-y-0 ktw-pl-4"
+      >
         <Checkbox
           defaultChecked={field.value}
           onCheckedChange={field.onChange}
@@ -141,7 +148,10 @@ export const KdCheckBoxGroup =
   (options: Record<string, string>): FunctionComponent<FieldProps> =>
   ({ field, context }: FieldProps) => {
     return (
-      <div className="ktw-flex ktw-flex-col ktw-gap-y-3 ktw-pl-4">
+      <div
+        key={JSON.stringify(options)}
+        className="ktw-flex ktw-flex-col ktw-gap-y-3 ktw-pl-4"
+      >
         {Object.entries(options).map(([value, label]) => (
           <FormItem
             key={value}
@@ -174,7 +184,10 @@ export const KdTextArray =
   ): FunctionComponent<FieldProps> =>
   ({ field, context }: FieldProps) => {
     return (
-      <div className="ktw-flex ktw-flex-col ktw-gap-y-3 ktw-pl-4">
+      <div
+        key={`${newItemPlaceholder},${maxItems}`}
+        className="ktw-flex ktw-flex-col ktw-gap-y-3 ktw-pl-4"
+      >
         {(field.value ?? []).map((entry: string, index: number) => (
           <div
             className={"ktw-flex ktw-flex-row ktw-gap-x-2"}
