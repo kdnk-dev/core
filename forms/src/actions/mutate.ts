@@ -1,7 +1,7 @@
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
-import { KdnkActionError, KdnkActionState } from "@kdnk.dev/forms";
 import { KdnkDeleteResponse, SupabaseDbTypes } from "@/actions/types";
 import { KdnkTableFetchTypes, KdnkViewFetchTypes } from "@/actions/fetch";
+import { KdnkActionError, KdnkActionState } from "@/form/types";
 
 export function upsertAction<
   Database extends SupabaseDbTypes,
