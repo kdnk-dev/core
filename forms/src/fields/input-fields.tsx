@@ -90,7 +90,13 @@ export const KdBooleanRadioGroup =
   ({ field, context }: FieldProps) => {
     return (
       <RadioGroup
-        defaultValue={field.value ? "true" : "false"}
+        defaultValue={
+          field.value === true
+            ? "true"
+            : field.value === false
+              ? "false"
+              : field.value
+        }
         onValueChange={field.onChange}
         className="ktw-flex ktw-flex-col ktw-space-y-1 k ktw-pl-4"
       >
