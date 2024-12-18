@@ -19,7 +19,6 @@ export const KdFormField = ({
   render: FunctionComponent<FieldProps>;
 }) => {
   const kdnkContext = useContext(KdnkFormContext);
-  const Field = render;
 
   return (
     <FormField
@@ -32,7 +31,7 @@ export const KdFormField = ({
             </FormLabel>
           )}
           <FormControl>
-            <Field field={field} context={kdnkContext} />
+            {render({ field: field, context: kdnkContext })}
           </FormControl>
           <FormMessage className="ktw-pl-1 ktw-pt-1">
             {/* nbsp so that we take up line height when there is no error (and don't reflow when an error appears) */}
