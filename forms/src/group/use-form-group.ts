@@ -6,6 +6,7 @@ export function useFormGroup(): {
   formGroup: FormGroup;
   submitPending: boolean;
   lastActionStatus: FormGroupActionStatus;
+  getFormCount: () => number;
   submitAll: () => void;
   validateAll: () => Promise<boolean>;
 } {
@@ -53,11 +54,7 @@ export function useFormGroup(): {
     },
   };
 
-  const validateAll = async () => {
-    return (
-      await Promise.all(forms.current.map((form) => form.validate()))
-    ).every((result) => result);
-  };
+  const getFormCount = () => forms.current.length;
 
   const submitAll = async () => {
     if (submitPending) {
@@ -71,10 +68,17 @@ export function useFormGroup(): {
     forms.current.forEach((form) => form?.submit());
   };
 
+  const validateAll = async () => {
+    return (
+      await Promise.all(forms.current.map((form) => form.validate()))
+    ).every((result) => result);
+  };
+
   return {
     formGroup,
     submitPending,
     lastActionStatus,
+    getFormCount,
     submitAll,
     validateAll,
   };
