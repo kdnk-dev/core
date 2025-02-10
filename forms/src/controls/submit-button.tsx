@@ -19,7 +19,7 @@ export function KdSubmitButton({
       aria-disabled={kdnkFormContext.isActionPending}
     >
       {kdnkFormContext.isActionPending
-        ? (pendingElement ?? <LoaderCircle />)
+        ? (pendingElement ?? <LoaderCircle className="animate-spin" />)
         : props.children}
     </Button>
   );
