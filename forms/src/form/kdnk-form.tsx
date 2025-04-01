@@ -83,7 +83,7 @@ const kdnkFormForSchema = <FormSchemaType extends ZodRawShape>(
           (
             props: Omit<
               FormPropsWithContext<FormDataType, ContextType>,
-              "contents"
+              "content"
             >,
           ) => <FormComponentWithContext {...props} content={ChildComponent} />,
       };
