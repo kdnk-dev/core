@@ -9,6 +9,7 @@ export type {
   KdnkActionState,
   KdnkActionError,
   KdnkFormState,
+  KdnkFormContextType
 } from "@/form/types";
 export type {
   KActionState,
