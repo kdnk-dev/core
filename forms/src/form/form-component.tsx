@@ -1,13 +1,13 @@
 import { ZodType } from "zod";
 import {
   FunctionComponent,
+  useActionState,
   useEffect,
   useId,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
-import { useFormState as useActionState } from "react-dom";
 import { DefaultValues, FieldValues, Path, useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { KdnkActionState } from "@/form/types";
@@ -43,7 +43,7 @@ export function buildKdnkForm<
     const form = useForm<FormDataType>({
       resolver: zodResolver(schema),
       defaultValues: (data
-        ? data.existingRecord ?? data.newRecordDefaults
+        ? (data.existingRecord ?? data.newRecordDefaults)
         : {}) as DefaultValues<FormDataType>,
     });
 
