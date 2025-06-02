@@ -43,7 +43,7 @@ export function buildKdnkForm<
     const form = useForm<FormDataType>({
       resolver: zodResolver(schema),
       defaultValues: (data
-        ? (data.existingRecord ?? data.newRecordDefaults)
+        ? data.existingRecord ?? data.newRecordDefaults
         : {}) as DefaultValues<FormDataType>,
     });
 

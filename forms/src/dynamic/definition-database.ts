@@ -7,10 +7,10 @@ export const dbTypesEnum = z.enum([
   "textArray",
   "numberArray",
   "primaryKey",
-  "uuid"
+  "uuid",
 ]);
 
 export const DynamicFormDatabaseDefinition = z.record(
   z.string(),
-  z.record(z.string(), dbTypesEnum.default("text").optional())
+  z.record(z.string(), dbTypesEnum.default("text").optional()),
 );

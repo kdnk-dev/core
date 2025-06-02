@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from "react";
+import React, { useContext } from "react";
 import {
   FormControl,
   FormField,
@@ -16,7 +16,7 @@ export const KdFormField = ({
 }: {
   name: string;
   label?: React.JSX.Element | string;
-  render: FunctionComponent<FieldProps>;
+  render: (props: FieldProps) => React.ReactNode;
 }) => {
   const kdnkContext = useContext(KdnkFormContext);
 

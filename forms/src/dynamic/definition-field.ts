@@ -4,8 +4,8 @@ const DynamicFieldDefinitionShared = {
   forColumnType: (type: any) => ({
     label: z.string().optional(),
     optional: z.boolean({ coerce: true }).default(false).optional(),
-    hideIf: z.record(type, z.string()).optional()
-  })
+    hideIf: z.record(type, z.string()).optional(),
+  }),
 };
 
 export const DynamicFieldDefinition = {
@@ -31,7 +31,7 @@ export const DynamicFieldDefinition = {
                     return false;
                   }
                 },
-                { message: "Invalid regular expression for matchPattern" }
+                { message: "Invalid regular expression for matchPattern" },
               )
               .optional(),
             containsPattern: z
@@ -45,11 +45,11 @@ export const DynamicFieldDefinition = {
                     return false;
                   }
                 },
-                { message: "Invalid regular expression for matchPattern" }
+                { message: "Invalid regular expression for matchPattern" },
               )
-              .optional()
+              .optional(),
           })
-          .optional()
+          .optional(),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
@@ -68,7 +68,7 @@ export const DynamicFieldDefinition = {
                     return false;
                   }
                 },
-                { message: "Invalid regular expression for matchPattern" }
+                { message: "Invalid regular expression for matchPattern" },
               )
               .optional(),
             containsPattern: z
@@ -82,11 +82,11 @@ export const DynamicFieldDefinition = {
                     return false;
                   }
                 },
-                { message: "Invalid regular expression for matchPattern" }
+                { message: "Invalid regular expression for matchPattern" },
               )
-              .optional()
+              .optional(),
           })
-          .optional()
+          .optional(),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
@@ -107,7 +107,7 @@ export const DynamicFieldDefinition = {
                     return false;
                   }
                 },
-                { message: "Invalid regular expression for matchPattern" }
+                { message: "Invalid regular expression for matchPattern" },
               )
               .optional(),
             itemContainsPattern: z
@@ -121,12 +121,12 @@ export const DynamicFieldDefinition = {
                     return false;
                   }
                 },
-                { message: "Invalid regular expression for matchPattern" }
+                { message: "Invalid regular expression for matchPattern" },
               )
               .optional(),
-            maxEntries: z.number({ coerce: true }).optional()
+            maxEntries: z.number({ coerce: true }).optional(),
           })
-          .optional()
+          .optional(),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
@@ -135,22 +135,22 @@ export const DynamicFieldDefinition = {
           .object({
             placeholder: z.number().optional(),
             minValue: z.number().optional(),
-            maxValue: z.number().optional()
+            maxValue: z.number().optional(),
           })
-          .optional()
+          .optional(),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
-        fieldType: z.literal("date")
+        fieldType: z.literal("date"),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
         fieldType: z.literal("checkbox"),
         config: z
           .object({
-            itemLabel: z.string().optional()
+            itemLabel: z.string().optional(),
           })
-          .optional()
+          .optional(),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
@@ -158,32 +158,32 @@ export const DynamicFieldDefinition = {
         config: z
           .object({
             yesOptionLabel: z.string().default("Yes").optional(),
-            noOptionLabel: z.string().default("No").optional()
+            noOptionLabel: z.string().default("No").optional(),
           })
           .default({ yesOptionLabel: "Yes", noOptionLabel: "No" })
-          .optional()
+          .optional(),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
         fieldType: z.literal("select"),
         config: z.object({
           placeholder: z.string().optional(),
-          selectableOptions: z.record(z.string(), z.string())
-        })
+          selectableOptions: z.record(z.string(), z.string()),
+        }),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
         fieldType: z.literal("checkboxGroup"),
         config: z.object({
-          selectableOptions: z.record(z.string(), z.string())
-        })
+          selectableOptions: z.record(z.string(), z.string()),
+        }),
       }),
       z.object({
         ...DynamicFieldDefinitionShared.forColumnType(type),
         fieldType: z.literal("radioGroup"),
         config: z.object({
-          selectableOptions: z.record(z.string(), z.string())
-        })
-      })
-    ])
+          selectableOptions: z.record(z.string(), z.string()),
+        }),
+      }),
+    ]),
 };

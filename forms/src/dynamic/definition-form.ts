@@ -13,25 +13,25 @@ const DynamicFormDefinitionShared = {
         z.literal("disable"),
         z.literal("invisible"),
         z.literal("remove"),
-        z.undefined()
+        z.undefined(),
       ]),
       existingRecordsInitialState: z.union([
         z.literal("edit"),
         z.literal("view-readonly"),
-        z.literal("view-editable")
+        z.literal("view-editable"),
       ]),
       maxNewRecords: z.number().positive().optional(),
-      newRecordInitialCount: z.number().nonnegative().optional()
+      newRecordInitialCount: z.number().nonnegative().optional(),
     })
     .refine(
       (value) =>
         !(value.newRecordInitialCount && value.maxNewRecords) ||
         value.newRecordInitialCount <= value.maxNewRecords,
-      "newRecordInitialCount must be <= maxNewRecords"
+      "newRecordInitialCount must be <= maxNewRecords",
     )
     .optional(),
   hiddenFields: z.record(z.string(), dbTypesEnum).optional(),
-  hideIfMode: z.union([z.literal("invisible"), z.literal("remove")]).optional()
+  hideIfMode: z.union([z.literal("invisible"), z.literal("remove")]).optional(),
 };
 
 export const DynamicFormDefinition = {
@@ -43,34 +43,34 @@ export const DynamicFormDefinition = {
         .optional(),
       formFields: z.record(
         z.string(),
-        DynamicFieldDefinition.withoutColumnType()
-      )
+        DynamicFieldDefinition.withoutColumnType(),
+      ),
     }),
   forDbTable: (
     dbDef: DynamicFormDatabaseDefinitionT,
-    tableName: keyof typeof dbDef
+    tableName: keyof typeof dbDef,
   ) => {
     const columnsEnum = z.enum([
       Object.keys(dbDef[tableName])[0],
-      ...Object.keys(dbDef[tableName]).slice(1)
+      ...Object.keys(dbDef[tableName]).slice(1),
     ]);
     return z.object({
       ...DynamicFormDefinitionShared,
       table: z.object({
         name: z.literal(tableName),
-        primaryKeyColumn: columnsEnum
+        primaryKeyColumn: columnsEnum,
       }),
       formFields: z.record(
         columnsEnum,
-        DynamicFieldDefinition.forColumnType(columnsEnum)
-      )
+        DynamicFieldDefinition.forColumnType(columnsEnum),
+      ),
     });
   },
   forDbDef: (dbDef: DynamicFormDatabaseDefinitionT) =>
     z.union(
       // @ts-expect-error sadface
       Object.keys(dbDef).map((tableName) =>
-        DynamicFormDefinition.forDbTable(dbDef, tableName)
-      )
-    )
+        DynamicFormDefinition.forDbTable(dbDef, tableName),
+      ),
+    ),
 };

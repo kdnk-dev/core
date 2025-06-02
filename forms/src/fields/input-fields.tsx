@@ -11,11 +11,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
-import { FunctionComponent } from "react";
 import { FieldProps } from "@/fields/types";
 
 export const KdInputField =
-  (type: string, placeholder?: string): FunctionComponent<FieldProps> =>
+  (type: string, placeholder?: string) =>
   ({ field, context }: FieldProps) => {
     const { value, ...fieldPropsWithoutValue } = field;
     return (
@@ -30,10 +29,7 @@ export const KdInputField =
   };
 
 export const KdSelectField =
-  (
-    options: Record<string, string>,
-    placeholder?: string,
-  ): FunctionComponent<FieldProps> =>
+  (options: Record<string, string>, placeholder?: string) =>
   ({ field, context }: FieldProps) => {
     return (
       <Select
@@ -56,7 +52,7 @@ export const KdSelectField =
   };
 
 export const KdRadioGroup =
-  (options: Record<string, string>): FunctionComponent<FieldProps> =>
+  (options: Record<string, string>) =>
   ({ field, context }: FieldProps) => {
     return (
       <RadioGroup
@@ -83,10 +79,7 @@ export const KdRadioGroup =
   };
 
 export const KdBooleanRadioGroup =
-  (
-    yesOptionLabel?: string,
-    noOptionLabel?: string,
-  ): FunctionComponent<FieldProps> =>
+  (yesOptionLabel?: string, noOptionLabel?: string) =>
   ({ field, context }: FieldProps) => {
     return (
       <RadioGroup
@@ -123,7 +116,7 @@ export const KdBooleanRadioGroup =
   };
 
 export const KdCheckBox =
-  (label: string): FunctionComponent<FieldProps> =>
+  (label: string) =>
   ({ field, context }: FieldProps) => {
     return (
       <div className="ktw-flex ktw-flex-row ktw-items-start ktw-space-x-3 ktw-space-y-0 ktw-pl-4">
@@ -138,7 +131,7 @@ export const KdCheckBox =
   };
 
 export const KdCheckBoxGroup =
-  (options: Record<string, string>): FunctionComponent<FieldProps> =>
+  (options: Record<string, string>) =>
   ({ field, context }: FieldProps) => {
     return (
       <div className="ktw-flex ktw-flex-col ktw-gap-y-3 ktw-pl-4">
@@ -168,10 +161,7 @@ export const KdCheckBoxGroup =
   };
 
 export const KdTextArray =
-  (
-    newItemPlaceholder?: string,
-    maxItems?: number,
-  ): FunctionComponent<FieldProps> =>
+  (newItemPlaceholder?: string, maxItems?: number) =>
   ({ field, context }: FieldProps) => {
     return (
       <div className="ktw-flex ktw-flex-col ktw-gap-y-3 ktw-pl-4">
