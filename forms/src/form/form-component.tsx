@@ -1,6 +1,7 @@
 import { ZodType } from "zod";
 import {
   FunctionComponent,
+  startTransition,
   useActionState,
   useEffect,
   useId,
@@ -14,7 +15,6 @@ import { KdnkActionState } from "@/form/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KdnkFormContext } from "@/form/context";
 import { FormProps } from "@/form/types-internal";
-import { useActionPending } from "@/utils/use-action-pending";
 
 export function buildKdnkForm<
   SchemaType extends ZodType<any, any, any>,
@@ -54,7 +54,7 @@ export function buildKdnkForm<
       };
     }, [form, formHtmlElement]);
 
-    const [state, formAction] = useActionState<
+    const [state, formAction, isPending] = useActionState<
       KdnkActionState<FormDataType>,
       FormDataType
     >(
@@ -66,11 +66,6 @@ export function buildKdnkForm<
       },
     );
 
-    const [actionPending, pendingFormAction] = useActionPending(
-      state,
-      formAction,
-    );
-
     useEffect(() => {
       if (formGroup && formGroup) {
         formGroup.update({
@@ -78,12 +73,12 @@ export function buildKdnkForm<
           submit: () => formHtmlElement.current?.requestSubmit(),
           validate: () => form.trigger(),
           lastActionStatus: state.lastInvocationStatus,
-          actionPending: actionPending,
+          actionPending: isPending,
         });
 
         return () => formGroup.remove(form);
       }
-    }, [formId, formHtmlElement, form, state, actionPending]);
+    }, [formId, formHtmlElement, form, state, isPending]);
 
     const [formMode, setFormMode] = useState(
       data?.existingRecordInitialState ?? "edit",
@@ -126,7 +121,7 @@ export function buildKdnkForm<
     return (
       <Form {...form}>
         <KdnkFormContext.Provider
-          value={{ isActionPending: actionPending, formMode: formMode }}
+          value={{ isActionPending: isPending, formMode: formMode }}
         >
           <form
             ref={formHtmlElement}
@@ -134,7 +129,7 @@ export function buildKdnkForm<
               (formData: FormDataType) => {
                 // TODO: Only send dirty fields.
                 console.log(form.formState.dirtyFields);
-                pendingFormAction(formData);
+                startTransition(() => formAction(formData));
               },
               (error) => console.log(error),
             )}
@@ -143,7 +138,7 @@ export function buildKdnkForm<
               form={form}
               displayMode={formMode}
               startEdit={() => setFormMode("edit")}
-              isActionPending={actionPending}
+              isActionPending={isPending}
               actionLastInvocationStatus={
                 state.lastInvocationStatus === "none"
                   ? "none"
