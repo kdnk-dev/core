@@ -17,7 +17,7 @@
     "lint:fix": "eslint . --ext ts,tsx --fix"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.46.1",
+    "@supabase/supabase-js": "2.90.1",
     "react": "19.1.0"
   },
   "devDependencies": {
