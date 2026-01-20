@@ -9,7 +9,7 @@ export function upsertAction<
   DatabaseTable extends
     Database["public"]["Tables"][keyof Database["public"]["Tables"]],
 >(
-  client: () => SupabaseClient<Database>,
+  client: () => Promise<SupabaseClient<Database>>,
   tableName: keyof Database["public"]["Tables"],
   idFieldName: { db: keyof DatabaseTable["Row"]; form: keyof FormDataType },
   formDataToDatabaseRow: (formData: FormDataType) => DatabaseTable["Update"],
@@ -20,10 +20,12 @@ export function upsertAction<
   return async (
     formData: FormDataType,
   ): Promise<KdnkActionState<FormDataType>> => {
+    const sb = await client();
+
     let resp;
 
     if (!formData[idFieldName.form]) {
-      resp = await client()
+      resp = await sb
         // @ts-ignore
         .from(tableName)
         // @ts-ignore
@@ -33,11 +35,12 @@ export function upsertAction<
     } else {
       const valuesToUpdate = formDataToDatabaseRow(formData);
 
-      resp = await client()
+      resp = await sb
         // @ts-ignore
         .from(tableName)
         // @ts-ignore
         .update(valuesToUpdate)
+        // @ts-ignore
         .eq(idFieldName.db as string, formData[idFieldName.form]!)
         .select()
         .single();
@@ -73,13 +76,15 @@ export const deleteSingle =
       | KdnkTableFetchTypes<Database, any, any>
       | KdnkViewFetchTypes<Database, any, any>,
   >(
-    client: () => SupabaseClient<Database>,
+    client: () => Promise<SupabaseClient<Database>>,
     tableName: DbTypes["TableName"],
     keyColumn: DbTypes["KeyName"],
     onSuccess: (deletedKey: DbTypes["KeyType"]) => void,
   ) =>
   async (key: DbTypes["KeyType"]): Promise<KdnkDeleteResponse> => {
-    const { error } = await client()
+    const sb = await client();
+
+    const { error } = await sb
       .from(tableName)
       .delete()
       // TODO: Check these casts are safe.

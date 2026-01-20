@@ -41,7 +41,7 @@ export const dynamicFormUpsertAction = async <
   FormType extends ZodType<any, any, any>,
   FormDataType extends KdnkFormTypes<FormType>,
 >(
-  createClient: () => SupabaseClient<DatabaseType>,
+  createClient: () => Promise<SupabaseClient<DatabaseType>>,
   tableName: keyof DatabaseType["public"]["Tables"],
   keyColumn: keyof DatabaseType["public"]["Tables"][typeof tableName]["Row"],
   formData: KFormData<FormDataType>,

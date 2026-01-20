@@ -45,13 +45,15 @@ export const fetchSingle =
       | KdnkTableFetchTypes<Database, any, any>
       | KdnkViewFetchTypes<Database, any, any>,
   >(
-    client: () => SupabaseClient<Database>,
+    client: () => Promise<SupabaseClient<Database>>,
     tableName: DbTypes["TableName"],
     keyColumn: DbTypes["KeyName"],
     rowToRecord: (row: DbTypes["RowType"]) => RecordType,
   ) =>
   async (key: DbTypes["KeyType"]): Promise<KdnkFetchResponse<RecordType>> => {
-    const { data, error } = await client()
+    const sb = await client();
+
+    const { data, error } = await sb
       .from(tableName)
       .select()
       // TODO: Check these casts are safe.
@@ -73,13 +75,15 @@ export const fetchMultiple =
       | KdnkTableFetchTypes<Database, any, any>
       | KdnkViewFetchTypes<Database, any, any>,
   >(
-    client: () => SupabaseClient<Database>,
+    client: () => Promise<SupabaseClient<Database>>,
     tableName: DbTypes["TableName"],
     keyColumn: DbTypes["KeyName"],
     rowToRecord: (row: DbTypes["RowType"]) => RecordType,
   ) =>
   async (key: DbTypes["KeyType"]): Promise<KdnkFetchResponse<RecordType[]>> => {
-    const { data, error } = await client()
+    const sb = await client();
+
+    const { data, error } = await sb
       .from(tableName)
       .select()
       // TODO: Check these casts are safe.
@@ -104,7 +108,7 @@ export const fetchRange =
       | KdnkTableFetchTypes<Database, any, any>
       | KdnkViewFetchTypes<Database, any, any>,
   >(
-    client: () => SupabaseClient<Database>,
+    client: () => Promise<SupabaseClient<Database>>,
     tableName: DbTypes["TableName"],
     keyColumn: DbTypes["KeyName"],
     rowToRecord: (row: DbTypes["RowType"]) => RecordType,
@@ -113,7 +117,9 @@ export const fetchRange =
     gt_or_eq_to: DbTypes["KeyType"];
     lt_or_eq_to: DbTypes["KeyType"];
   }): Promise<KdnkFetchResponse<RecordType[]>> => {
-    const { data, error } = await client()
+    const sb = await client();
+
+    const { data, error } = await sb
       .from(tableName)
       .select()
       // TODO: Check these casts are safe.
@@ -137,12 +143,14 @@ export const fetchAll =
     RecordType,
     DbTypes extends KdnkDbFetchAllTypes<Database, any>,
   >(
-    client: () => SupabaseClient<Database>,
+    client: () => Promise<SupabaseClient<Database>>,
     tableName: DbTypes["TableName"],
     rowToRecord: (row: DbTypes["RowType"]) => RecordType,
   ) =>
   async (): Promise<KdnkFetchResponse<RecordType[]>> => {
-    const { data, error } = await client().from(tableName).select();
+    const sb = await client();
+
+    const { data, error } = await sb.from(tableName).select();
 
     if (error) {
       return { error: `[${error.code}] ${error.message} (${error.details})` };
