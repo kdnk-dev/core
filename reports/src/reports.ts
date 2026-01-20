@@ -52,7 +52,7 @@ export const kdnkReport =
     Table extends TableOrViewName<Database>,
     ConstraintsType extends ReportConstraint<Database, Table, any, any>,
   >(
-    supabase: () => SupabaseClient<Database>,
+    supabase: () => Promise<SupabaseClient<Database>>,
     tableOrView: Table,
     dimensions: (keyof TableOrView<Database, Table>["Row"])[],
     metrics: ReportMetric<TableOrView<Database, Table>["Row"]>[],
@@ -67,7 +67,9 @@ export const kdnkReport =
         })
         .join(", ");
 
-    let queryBuilder = supabase()
+    const sb = await supabase();
+
+    let queryBuilder = sb
       // @ts-ignore
       .from(tableOrView)
       .select(query);
