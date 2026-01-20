@@ -1,6 +1,6 @@
 {
   "name": "@kdnk.dev/f8n-utils",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "files": [
     "dist"
@@ -15,9 +15,9 @@
     "lint:fix": "eslint . --ext ts,tsx --fix"
   },
   "dependencies": {
-    "@supabase/auth-js": "2.65.1",
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "2.46.1",
+    "@supabase/auth-js": "2.91.0",
+    "@supabase/ssr": "0.8.0",
+    "@supabase/supabase-js": "2.91.0",
     "@vitejs/plugin-react": "^4.3.3",
     "jwt-decode": "^4.0.0",
     "react": "19.1.0"
